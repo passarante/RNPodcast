@@ -2,9 +2,9 @@
 
 React Native Podcast app based on Emmanuel Quimper Tutorials
 
-- [ ] Install base dependencies
-- [ ] Basic Setup of Navigation
-- [ ] Setup the TabBar and basic ui of the Search Screen
+- [x] Install base dependencies
+- [x] Basic Setup of Navigation
+- [x] Setup the TabBar and basic ui of the Search Screen
 - [ ] Setup Apollo Graphql and create SearchQuery
 - [ ] Create Podcast Details Screen and Type Checking the React-Navigation 5 Params
 - [ ] Add React Native Vector Icons
