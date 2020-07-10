@@ -1,41 +1,60 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, Text} from 'react-native-design-utility';
-import {TextInput, StyleSheet, FlatList} from 'react-native';
+import {TextInput, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
 import {theme} from '../../constants/theme';
-import KeyboardDismissView from '../KeyboardDismissView';
+import {useLazyQuery} from '@apollo/react-hooks';
+import {
+  SearchQuery,
+  SearchQuery_search,
+  SearchQueryVariables,
+} from '../../types/graphql';
+import searchQuery from '../../graphql/query/searchQuery';
+import SearchEmpty from './SearchEmpty';
+import SearchTile from './SearchTile';
+import SearchLoading from './SearchLoading';
 
 const SearchScreen = () => {
+  const [term, setTerm] = useState('');
+  const [search, {data, loading, error}] = useLazyQuery<
+    SearchQuery,
+    SearchQueryVariables
+  >(searchQuery);
+
+  const onSearch = async () => {
+    try {
+      await search({variables: {term}});
+    } catch (error) {}
+  };
+
   return (
-    <KeyboardDismissView>
-      <Box f={1} bg="white">
-        <Box h={50} w="100%" px="sm" my="sm">
-          <TextInput
-            style={styles.input}
-            selectionColor={theme.color.blueLight}
-            placeholder="Search Podcast"
-          />
-        </Box>
-        <FlatList
-          style={styles.list}
-          data={[{id: 1}, {id: 2}]}
-          renderItem={() => (
-            <Box h={90} dir="row" align="center" px="sm">
-              <Box h={70} w={70} bg="blueLight" radius={10} mr={10} />
-              <Box>
-                <Text bold>Joe Rogan</Text>
-                <Text size="xs" color="grey">
-                  This is the subtitle
-                </Text>
-                <Text size="xs" color="blueLight">
-                  400 episodes
-                </Text>
-              </Box>
-            </Box>
-          )}
-          keyExtractor={(item) => String(item.id)}
+    <Box f={1} bg="white">
+      <Box h={50} w="100%" px="sm" my="sm">
+        <TextInput
+          style={styles.input}
+          selectionColor={theme.color.blueLight}
+          onChangeText={setTerm}
+          autoCorrect={false}
+          onSubmitEditing={onSearch}
+          value={term}
+          placeholder="Search Podcast"
         />
       </Box>
-    </KeyboardDismissView>
+      {error ? (
+        <Box f={1} center>
+          <Text color="red">{error.message}</Text>
+        </Box>
+      ) : (
+        <FlatList<SearchQuery_search>
+          contentContainerStyle={styles.listContentContainer}
+          ListHeaderComponent={<>{loading && <SearchLoading />}</>}
+          ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
+          data={data?.search ?? []}
+          keyboardShouldPersistTaps="never"
+          renderItem={({item}) => <SearchTile item={item} />}
+          keyExtractor={(item) => String(item.feedUrl)}
+        />
+      )}
+    </Box>
   );
 };
 
@@ -49,7 +68,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.space.sm,
     fontSize: theme.text.size.md,
   },
-  list: {
-    minHeight: '100%',
+
+  listContentContainer: {
+    paddingBottom: 90,
+  },
+  img: {
+    flex: 1,
+    borderRadius: 10,
   },
 });
