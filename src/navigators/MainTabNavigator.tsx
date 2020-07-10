@@ -6,6 +6,9 @@ import SearchScreen from '../components/search/SearchScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import PodcastDetailsScreen from '../components/podcastDetails/PodcastDetailsScreen';
 import {theme} from '../constants/theme';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+
+const ICON_SIZE = 24;
 
 const MainTab = createBottomTabNavigator();
 
@@ -42,7 +45,12 @@ const LibraryStackNavigator = () => {
 const SearchStackNavigator = () => {
   return (
     <SearchStack.Navigator
-      screenOptions={{headerTintColor: theme.color.blueLight}}>
+      screenOptions={{
+        headerTintColor: theme.color.blueLight,
+        headerTitleStyle: {
+          color: theme.color.black,
+        },
+      }}>
       <SearchStack.Screen
         options={{
           title: 'Search',
@@ -63,10 +71,38 @@ const SearchStackNavigator = () => {
 
 const MainTabNavigator = () => {
   return (
-    <MainTab.Navigator>
-      <MainTab.Screen name="ListenNow" component={ListenNowStackNavigator} />
-      <MainTab.Screen name="Library" component={LibraryStackNavigator} />
-      <MainTab.Screen name="Search" component={SearchStackNavigator} />
+    <MainTab.Navigator tabBarOptions={{activeTintColor: theme.color.blueLight}}>
+      <MainTab.Screen
+        name="ListenNow"
+        component={ListenNowStackNavigator}
+        options={{
+          tabBarIcon: (props) => (
+            <FeatherIcon
+              color={props.color}
+              name="headphones"
+              size={ICON_SIZE}
+            />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="Library"
+        component={LibraryStackNavigator}
+        options={{
+          tabBarIcon: (props) => (
+            <FeatherIcon color={props.color} name="inbox" size={ICON_SIZE} />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="Search"
+        component={SearchStackNavigator}
+        options={{
+          tabBarIcon: (props) => (
+            <FeatherIcon color={props.color} name="search" size={ICON_SIZE} />
+          ),
+        }}
+      />
     </MainTab.Navigator>
   );
 };

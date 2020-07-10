@@ -12,6 +12,7 @@ import searchQuery from '../../graphql/query/searchQuery';
 import SearchEmpty from './SearchEmpty';
 import SearchTile from './SearchTile';
 import SearchLoading from './SearchLoading';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const SearchScreen = () => {
   const [term, setTerm] = useState('');
@@ -29,15 +30,26 @@ const SearchScreen = () => {
   return (
     <Box f={1} bg="white">
       <Box h={50} w="100%" px="sm" my="sm">
-        <TextInput
-          style={styles.input}
-          selectionColor={theme.color.blueLight}
-          onChangeText={setTerm}
-          autoCorrect={false}
-          onSubmitEditing={onSearch}
-          value={term}
-          placeholder="Search Podcast"
-        />
+        <Box
+          dir="row"
+          align="center"
+          h={40}
+          bg="greyLightest"
+          radius={10}
+          px="sm">
+          <Box mr={10}>
+            <FeatherIcon name="search" size={20} color={theme.color.greyDark} />
+          </Box>
+          <TextInput
+            style={styles.input}
+            selectionColor={theme.color.blueLight}
+            onChangeText={setTerm}
+            autoCorrect={false}
+            onSubmitEditing={onSearch}
+            value={term}
+            placeholder="Search Podcast"
+          />
+        </Box>
       </Box>
       {error ? (
         <Box f={1} center>
@@ -61,11 +73,7 @@ const SearchScreen = () => {
 export default SearchScreen;
 const styles = StyleSheet.create({
   input: {
-    height: 40,
     flex: 1,
-    backgroundColor: theme.color.greyLightest,
-    borderRadius: 10,
-    paddingHorizontal: theme.space.sm,
     fontSize: theme.text.size.md,
   },
 
