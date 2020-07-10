@@ -4,6 +4,8 @@ import ListenNowScreen from '../components/listenNow/ListenNowScreen';
 import LibraryScreen from '../components/library/LibraryScreen';
 import SearchScreen from '../components/search/SearchScreen';
 import {createStackNavigator} from '@react-navigation/stack';
+import PodcastDetailsScreen from '../components/podcastDetails/PodcastDetailsScreen';
+import {theme} from '../constants/theme';
 
 const MainTab = createBottomTabNavigator();
 
@@ -39,13 +41,21 @@ const LibraryStackNavigator = () => {
 };
 const SearchStackNavigator = () => {
   return (
-    <SearchStack.Navigator>
+    <SearchStack.Navigator
+      screenOptions={{headerTintColor: theme.color.blueLight}}>
       <SearchStack.Screen
         options={{
           title: 'Search',
         }}
         name="Search"
         component={SearchScreen}
+      />
+      <SearchStack.Screen
+        options={{
+          headerTitle: '',
+        }}
+        name="PodcastDetails"
+        component={PodcastDetailsScreen}
       />
     </SearchStack.Navigator>
   );
