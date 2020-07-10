@@ -8,7 +8,7 @@ React Native Podcast app based on Emmanuel Quimper Tutorials
 - [x] Setup Apollo Graphql and create SearchQuery
 - [x] Create Podcast Details Screen and Type Checking the React-Navigation 5 Params
 - [x] Add React Native Vector Icons
-- [ ] Fetch Rss Feed and Test Driven Development on Helpers Functions
+- [x] Fetch Rss Feed and Test Driven Development on Helpers Functions
 - [ ] Installing Audio module React-Native Track Player
 - [ ] Creatting a the MiniPlayer Component with PlayerContext
 - [ ] Work on Background Mode and Remote Buttons
