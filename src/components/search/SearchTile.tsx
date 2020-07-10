@@ -12,7 +12,7 @@ const SearchTile: React.FC<Props> = (props) => {
   const navigation = useNavigation();
 
   return (
-    <Box h={90} dir="row" align="center" px="sm">
+    <Box bg="white" h={90} dir="row" align="center" px="sm">
       <Box h={70} w={70} bg="blueLight" radius={10} mr={10}>
         <Image source={{uri: props.item.thumbnail}} style={styles.img} />
       </Box>
